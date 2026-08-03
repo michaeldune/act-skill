@@ -1,0 +1,4 @@
+interface:
+  display_name: "表演skill"
+  short_description: "把粗略剧情改写为情绪与表演主导的可生成视频提示词"
+  default_prompt: "使用表演skill，把我提供的剧情、对白或粗略提示词改写为情绪与演员表演主导，并适配 Kling 或 Seedance 2.0 的精准视频提示词。"

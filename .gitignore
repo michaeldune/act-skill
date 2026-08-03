@@ -1,0 +1,21 @@
+# Local governance and private working memory
+AGENTS.md
+MEMORY.md
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+
+# Editors and operating systems
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+~$*.docx
+
+# Temporary outputs
+*.tmp
+*.bak
+*.log

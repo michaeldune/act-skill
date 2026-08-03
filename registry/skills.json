@@ -1,0 +1,15 @@
+{
+  "schema_version": 1,
+  "skills": [
+    {
+      "internal_name": "direct-ai-actor-performance",
+      "display_name": "表演skill",
+      "status": "ready",
+      "source_path": "skills/direct-ai-actor-performance",
+      "knowledge_bases": ["knowledge-base/情绪"],
+      "primary_models": ["Kling", "Seedance 2.0"],
+      "performance_budget": "60%-70%",
+      "version": "1.0.0"
+    }
+  ]
+}
