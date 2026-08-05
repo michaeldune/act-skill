@@ -10,13 +10,16 @@ import re
 from pathlib import Path
 from typing import Iterable
 
-from docx import Document
-from docx.oxml.ns import qn
-from docx.table import Table
-from docx.text.paragraph import Paragraph
-
-
 def read_docx(path: Path) -> list[str]:
+    try:
+        from docx import Document
+        from docx.oxml.ns import qn
+        from docx.table import Table
+        from docx.text.paragraph import Paragraph
+    except ImportError as exc:
+        raise RuntimeError(
+            "Reading .docx files requires python-docx. Install it with: pip install python-docx"
+        ) from exc
     doc = Document(path)
     lines: list[str] = []
     for child in doc.element.body.iterchildren():
@@ -96,7 +99,6 @@ def discover_library(explicit: Path | None) -> Path:
     script_path = Path(__file__).resolve()
     candidates.extend([
         script_path.parents[3] / "knowledge-base" / "情绪",
-        Path(r"D:\AI-Skills知识库\knowledge-base\情绪"),
     ])
     for candidate in candidates:
         if candidate.exists():

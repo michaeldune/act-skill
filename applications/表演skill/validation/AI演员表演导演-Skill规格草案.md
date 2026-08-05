@@ -121,8 +121,8 @@
 
 目前已检查以下范围，尚未发现名为“情绪”的目录：
 
-- C:\Users\lyy20\Documents\Codex
-- D:\素材
+- <workspace>
+- <media-library>
 
 这不阻塞规格定稿；创建 Skill 前提供实际路径即可。
 
