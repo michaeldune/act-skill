@@ -44,14 +44,22 @@ def read_lines(path: Path) -> list[str]:
 
 def chunks(lines: Iterable[str]) -> list[tuple[str, str]]:
     result: list[tuple[str, str]] = []
-    heading = "未命名条目"
+    heading = "Untitled entry"
     buffer: list[str] = []
     for line in lines:
         markdown_heading = re.match(r"^##\s+(.+)$", line)
         normalized_heading = markdown_heading.group(1).strip() if markdown_heading else line
-        is_heading = len(normalized_heading) <= 32 and (
-            re.match(r"^(第[一二三四五六七八九十]+章|\d+[.、]|[一二三四五六七八九十]+[、.])", line)
-            or line.startswith("情绪：")
+        # English headings run longer than the original Chinese ones, so the limit is 80 characters.
+        # The \u escapes still recognise headings in a Chinese knowledge base (chapter numbers and
+        # the "emotion:" prefix), so both languages can be searched.
+        is_heading = len(normalized_heading) <= 80 and (
+            re.match(
+                r"^(\u7b2c[\u4e00\u4e8c\u4e09\u56db\u4e94\u516d\u4e03\u516b\u4e5d\u5341]+\u7ae0"
+                r"|\d+[.\u3001]|[\u4e00\u4e8c\u4e09\u56db\u4e94\u516d\u4e03\u516b\u4e5d\u5341]+[\u3001.])",
+                line,
+            )
+            or line.startswith("\u60c5\u7eea\uff1a")
+            or line.lower().startswith("emotion:")
             or bool(markdown_heading)
         )
         if is_heading:
@@ -70,6 +78,8 @@ def chunks(lines: Iterable[str]) -> list[tuple[str, str]]:
 
 def terms(query: str) -> list[str]:
     raw = re.findall(r"[\u4e00-\u9fff]{1,8}|[A-Za-z0-9_-]+", query.lower())
+    # Very short English words ("a", "of", "to") match almost every entry and drown the ranking.
+    raw = [t for t in raw if not (t.isascii() and len(t) < 3)]
     return list(dict.fromkeys(raw))
 
 
@@ -98,13 +108,13 @@ def discover_library(explicit: Path | None) -> Path:
         candidates.append(Path(env_path))
     script_path = Path(__file__).resolve()
     candidates.extend([
-        script_path.parents[3] / "knowledge-base" / "情绪",
+        script_path.parents[3] / "knowledge-base" / "emotion",
     ])
     for candidate in candidates:
         if candidate.exists():
             return candidate
     raise FileNotFoundError(
-        "未找到情绪知识库。请使用 --library 指定路径，或设置 ACT_SKILL_KB 环境变量。"
+        "Emotion knowledge base not found. Pass its path with --library, or set the ACT_SKILL_KB environment variable."
     )
 
 

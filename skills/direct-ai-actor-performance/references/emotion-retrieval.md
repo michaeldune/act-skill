@@ -1,40 +1,40 @@
-# 情绪知识库检索与取用
+# Searching and Using the Emotion Knowledge Base
 
-## 检索顺序
+## Search order
 
-1. 先从用户输入推导：人物关系、外部目标、内部抑制、触发事件、情绪阶段、强度与结束状态。
-2. 用“情绪名 + 阶段 + 行为倾向 + 场景约束”组成查询，例如：`悲伤 克制 迟发 不愿被看见`。
-3. 运行：
+1. First derive from the user's input: the relationship between characters, the external goal, what is being held back, the trigger event, the emotional stage, the intensity and the end state.
+2. Build the query from "emotion + stage + behavioural tendency + scene constraint", for example: `sadness restrained delayed does not want to be seen`.
+3. Run:
 
 ```powershell
-python scripts/search_emotion_library.py --query "悲伤 克制 迟发" --top-k 5 --json
+python scripts/search_emotion_library.py --query "sadness restrained delayed" --top-k 5 --json
 ```
 
-4. 候选条目只作为动作词库，不作为剧情事实来源。
-5. 过滤与角色身份、体力、关系、场景、时间或用户台词冲突的动作。
-6. 没有高相关结果时，自行按八维框架生成，禁止为了“用到知识库”而硬套。
+4. Treat candidate entries only as a vocabulary of actions, never as a source of story facts.
+5. Filter out actions that conflict with the character's identity, physical state, relationships, scene, timing or the user's lines.
+6. When there are no strong matches, generate your own with the eight-dimension framework; never force a fit just to "use the knowledge base".
 
-如果知识库位于自定义目录，可传入 `--library <path>`，或设置环境变量 `ACT_SKILL_KB`。
+If the knowledge base lives in a custom folder, pass `--library <path>` or set the `ACT_SKILL_KB` environment variable.
 
-## 取用上限
+## How much to take
 
-- 每个表演节拍通常取 1 个主要载体 + 1 个辅助载体。
-- 同一秒内不要堆叠眼神、眉、嘴、泪、手、肩、步伐、呼吸等全部反应。
-- 知识库内容最终只占提示词中的少量精确动作，不复制整段释义。
+- Each performance beat usually takes 1 primary carrier + 1 supporting carrier.
+- Do not stack eyes, brows, mouth, tears, hands, shoulders, steps and breath all in the same second.
+- Knowledge-base material should end up as only a few precise actions in the prompt, never a copied paragraph of explanation.
 
-## 筛选标准
+## Selection criteria
 
-优先保留：
+Keep, in priority:
 
-- 与触发事件存在因果关系的动作。
-- 能被镜头清楚捕捉的动作。
-- 与角色“想隐藏什么”形成张力的动作。
-- 能在给定时长内自然完成的动作。
-- 能和上一镜的动作、呼吸、道具状态连续衔接的动作。
+- Actions with a causal link to the trigger event.
+- Actions the camera can capture clearly.
+- Actions that create tension with what the character "wants to hide".
+- Actions that can be completed naturally within the given time.
+- Actions that connect smoothly with the previous shot's action, breath and prop state.
 
-淘汰：
+Discard:
 
-- 情绪标签正确但人物动机错误的动作。
-- 过度戏剧化、同时发生或时间无法容纳的动作。
-- 需要角色提前知道下一事件的反应。
-- 仅用于展示术语、无法转化为可见表演的描述。
+- Actions with the right emotion label but the wrong character motive.
+- Actions that are over-dramatic, happen all at once, or do not fit in the time available.
+- Reactions that require the character to know the next event in advance.
+- Descriptions that only show off terminology and cannot become a visible performance.

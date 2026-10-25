@@ -1,113 +1,113 @@
 ---
 name: direct-ai-actor-performance
-description: 将用户提供的剧本、对白、人物冲突、粗略 AI 视频提示词或参考视频表演，改写为以情绪和演员表演为绝对主导的精准视频生成提示词。用户提到“表演skill”、AI演员、情绪递进、微表情、哭戏、争吵、告别、台词停顿、呼吸、抢话、画外声、机位服务情绪、Kling 或 Seedance 2.0 表演提示词时使用。
+description: Rewrite a script, dialogue, character conflict, rough AI video prompt or reference performance into a precise video-generation prompt in which emotion and the actor's performance dominate. Use when the user mentions the Performance Skill, AI actors, emotional build, micro-expressions, crying scenes, arguments, goodbyes, pauses in dialogue, breathing, cutting in, off-screen voices, camera placement that serves emotion, or performance prompts for Kling, Seedance 2.0 or MiniMax H3.
 ---
 
-# 表演skill
+# Performance Skill
 
-## 目标与优先级
+## Goal and priorities
 
-把“人物在做什么”转译为“人物为什么这样做、情绪如何在时间中发生、观众能看到哪些证据”。最终提示词必须以演员表演为主，镜头、连续性和技术参数只负责托住表演。
+Translate "what the character is doing" into "why the character does it, how the emotion unfolds over time, and what evidence the audience can see". The final prompt must be led by the actor's performance. Camera, continuity and technical settings only support the performance.
 
-默认信息预算：
+Default information budget:
 
-- 情绪与演员表演：60%–70%
-- 对白、声音、呼吸和停顿：10%–15%
-- 机位、构图和运动：10%–15%
-- 人物、环境、道具、光线连续性：5%–8%
-- 模型参数和画质词：3%–5%
+- Emotion and the actor's performance: 60%-70%
+- Dialogue, sound, breathing and pauses: 10%-15%
+- Camera position, framing and movement: 10%-15%
+- Character, environment, prop and lighting continuity: 5%-8%
+- Model parameters and image-quality words: 3%-5%
 
-若用户要求不同配比，服从用户。不得让摄影术语、画质形容词、背景细节或知识库材料反客为主。
+If the user asks for a different split, follow the user. Never let camera jargon, quality adjectives, background detail or knowledge-base material take over.
 
-## 工作流
+## Workflow
 
-1. **锁定输入事实**：提取人物、关系、地点、时间、对白、事件顺序、已有机位、不可改变项和不确定项。不得擅自增加剧情事实。
-2. **确定戏剧核心**：用一句话写出外部目标、内部压抑目标、阻力与转折。没有冲突时，不制造夸张情绪；用细微意图与行为完成表演。
-3. **建立情绪曲线**：写明起始状态 → 触发事件 → 抑制或升级 → 转折 → 结束残留。情绪必须有原因、时间和可见载体。
-4. **按需检索情绪知识库**：先理解人物与场景，再检索仓库根目录下的 `knowledge-base/情绪`。使用 `scripts/search_emotion_library.py`；脚本会优先读取 `ACT_SKILL_KB` 环境变量，再自动发现仓库内知识库。只吸收适配片段；无匹配或冲突时自行生成，不硬套模板。
-5. **分配时间**：按镜头或表演节拍写起止时间。先给触发与反应留时间，再放对白和动作。需要时用 `scripts/validate_timeline.py` 检查重叠、空档与对白时长。
-6. **设计表演**：每个关键节拍至少覆盖“意图、触发、可见反应、声音或沉默、结束状态”。重要段落使用八维表演框架。
-7. **设计机位意图**：先判断静止还是运动，再写机位位置、运动触发、路径、速度、持续时间与停止点。机位只服务情绪和信息揭示。
-8. **压缩连续性信息**：只写本镜头最容易漂移的身份、服装、空间关系、道具状态、光线方向和声场连续性。
-9. **适配模型**：读取 `references/model-adapters.md`，输出 Kling 版或 Seedance 2.0 版；版本未知时采用保守、通用写法，不虚构功能。
-10. **反向质检并修复**：优先修复情绪因果与节拍，其次对白归属和反应时序，再修机位，最后修连续性与参数。
+1. **Lock the input facts**: extract the characters, relationships, place, time, dialogue, order of events, any existing camera setups, what must not change, and what is uncertain. Do not add story facts.
+2. **Find the dramatic core**: in one sentence, state the external goal, the suppressed internal goal, the obstacle and the turn. If there is no conflict, do not invent big emotion; play it through small intentions and behaviour.
+3. **Build the emotional curve**: starting state -> trigger -> suppression or escalation -> turn -> what remains at the end. Every emotion needs a cause, a time and a visible carrier.
+4. **Search the emotion knowledge base when useful**: understand the characters and the scene first, then search `knowledge-base/emotion` at the repository root with `scripts/search_emotion_library.py`. The script reads the `ACT_SKILL_KB` environment variable first, then finds the knowledge base inside the repository. Take only the pieces that fit; when nothing matches or a piece conflicts, generate your own instead of forcing a template.
+5. **Allocate time**: write start and end times per shot or performance beat. Leave time for the trigger and the reaction first, then place dialogue and action. When needed, check overlaps, gaps and dialogue length with `scripts/validate_timeline.py`.
+6. **Design the performance**: every key beat covers at least "intention, trigger, visible reaction, sound or silence, end state". Use the eight-dimension performance framework for important passages.
+7. **Design the camera intent**: decide still or moving first, then write the camera position, what starts the move, its path, speed, duration and stopping point. The camera only serves emotion and the reveal of information.
+8. **Compress continuity**: write only what is most likely to drift in this shot: identity, wardrobe, spatial relationships, prop state, light direction and the continuity of the soundscape.
+9. **Adapt to the model**: read `references/model-adapters.md` and output a Kling, Seedance 2.0 or MiniMax H3 version. When the version is unknown, write conservatively and generically, and never invent features.
+10. **Check backwards and repair**: fix emotional cause and effect and the beats first, then dialogue ownership and reaction timing, then the camera, and continuity and parameters last.
 
-## 八维表演框架
+## The eight-dimension performance framework
 
-对每个关键节拍依次判断：
+For each key beat, decide in order:
 
-1. **时间与镜头**：发生在第几秒、哪个镜头、持续多久。
-2. **双重目标**：角色想完成的外部行动；角色想隐藏、压住或不让对方发现的内部状态。
-3. **情绪路径**：起点、触发点、变化方向和终点，不只写情绪名。
-4. **触发与载体**：哪句话、声音、目光、物件或动作触发；反应落在眼神、面部、呼吸、姿态、手部还是行动中。
-5. **面部动作**：使用肉眼可见的动作，如眼睑变紧、嘴角失去支撑、下颌短暂绷紧；避免只写“悲伤脸”。必要时参考 `references/facs-action-units.md`，但正文优先自然语言。
-6. **身体与行动**：视线落点、头颈方向、肩胸状态、重心、步伐、手部任务，以及动作完成/中断/停住/失败的状态。
-7. **声音与沉默**：说话者、音量、音色、语速、气息、停顿、吞咽、断句、抢话、画外声与必要静默。
-8. **结束与禁区**：镜头结束时情绪残留在哪里；明确禁止过早落泪、提前转头、提前看向触发物、无故大幅动作等会破坏节拍的反应。
+1. **Time and shot**: which second, which shot, how long it lasts.
+2. **Dual goals**: the external action the character wants to complete; the internal state the character wants to hide, hold down or keep the other person from noticing.
+3. **Emotional path**: start, trigger, direction of change and end point, not just the name of the emotion.
+4. **Trigger and carrier**: which line, sound, look, object or action triggers it; whether the reaction lands in the eyes, face, breath, posture, hands or action.
+5. **Facial action**: use movements a viewer can actually see, such as the eyelids tightening, the corners of the mouth losing support, the jaw tightening briefly; avoid writing only "sad face". Consult `references/facs-action-units.md` when needed, but write natural language in the prompt.
+6. **Body and action**: where the eyes land, head and neck direction, chest and shoulders, weight, steps, the task in the hands, and whether the action is completed, interrupted, held or fails.
+7. **Sound and silence**: speaker, volume, timbre, pace, breath, pauses, swallowing, broken phrasing, cutting in, off-screen voices and necessary silence.
+8. **Ending and forbidden reactions**: where the emotion is left at the end of the shot; explicitly forbid reactions that would break the beat, such as tears too early, turning the head too early, looking at the trigger too early, or large movements without a reason.
 
-## 对白与触发规则
+## Dialogue and trigger rules
 
-- 每句对白标明 `speaker`；需要时标明 `camera_subject`，两者可不同。
-- 画外声、电话声、广播声、门外声必须说明声源位置与画面中谁在反应。
-- 抢话和打断要写“谁打断谁、发生在哪个词或动作之后、被打断者留下什么未完成反应”。
-- 没有对白时，必须给触发物：环境声、目光、照片、门响、手机震动、物件状态改变或他人的无声动作。
-- 反应通常晚于触发；除非剧情明确要求，不让角色提前知道下一事件。
+- Mark the `speaker` of every line; mark the `camera_subject` when needed. They can differ.
+- For an off-screen voice, a phone call, a broadcast or a voice behind a door, state where the sound comes from and who in frame reacts.
+- For cutting in and interruptions, write who interrupts whom, after which word or action, and what unfinished reaction the interrupted person is left with.
+- When there is no dialogue, give a trigger: an ambient sound, a look, a photo, a door, a phone vibrating, an object changing state, or someone else's silent action.
+- A reaction usually comes after its trigger; unless the story requires it, do not let a character know the next event in advance.
 
-## 机位意图规则
+## Camera intent rules
 
-为每个镜头补一句内部判断：`观众此刻需要感受到什么，因此机位为何在这里、为何动或不动。`
+For every shot, add one internal judgement: `What does the audience need to feel at this moment, so why is the camera here, and why does it move or not move?`
 
-- **静止**：用于压迫、尴尬、等待、无处可逃、让微表情自己发生；必须写清静止的情绪理由。
-- **运动**：只能由触发、关系变化、信息揭示或身体行动驱动。写清开始条件、方向/轨迹、速度、时长和停止位置。
-- **位置**：距离、视线高度、侧向角度、遮挡与角色之间的空间关系，应反映亲近、疏离、控制、脆弱或信息不对称。
-- 禁止机械公式，如“悲伤必推近、愤怒必手持”。同一情绪可因人物目标不同采用相反机位。
-- 镜头运动不得抢走演员的细小反应；不确定时，优先稳定、可读、少运动。
+- **Still**: for pressure, awkwardness, waiting, nowhere to escape, or letting micro-expressions happen on their own; always write the emotional reason for staying still.
+- **Moving**: only a trigger, a change in the relationship, a reveal of information or a physical action may drive it. Write the start condition, direction or path, speed, duration and stopping point.
+- **Position**: distance, eye height, side angle, obstruction and the spatial relationship between characters should reflect closeness, distance, control, vulnerability or unequal information.
+- No mechanical formulas such as "sadness always pushes in, anger is always handheld". The same emotion may call for opposite camera choices depending on the character's goal.
+- Camera movement must not steal the actor's small reactions; when unsure, prefer stable, readable and minimal movement.
 
-复杂对白、画外声和机位范式见 `references/dialogue-camera.md`。
+For complex dialogue, off-screen voices and camera patterns, see `references/dialogue-camera.md`.
 
-## 连续性最小锁定
+## Minimal continuity lock
 
-仅在存在漂移风险时加入一行：
+Add one line only when there is a risk of drift:
 
-`连续性锁定：人物身份/服装关键特征；空间轴线与人物位置；关键道具的手、方向和状态；主光方向与时间；上一镜动作和情绪残留。`
+`Continuity lock: key identity and wardrobe features; spatial axis and character positions; the hand, direction and state of key props; key light direction and time of day; the action and emotional residue from the previous shot.`
 
-每类只保留 1–2 个辨识度最高的锚点。除非用户要求，不写大段布景、镜头参数或服装清单。
+Keep only the 1-2 most recognisable anchors in each category. Unless the user asks, do not write long set descriptions, camera specifications or wardrobe lists.
 
-## 输出格式
+## Output format
 
-默认直接交付可复制提示词，并按以下顺序组织：
+By default, deliver a copy-ready prompt organised in this order:
 
-1. **模型与总时长**
-2. **场景和连续性锁定**（1–3 行）
-3. **戏剧核心与表演总方向**
-4. **分镜时间轴**：每镜写时间、画面主体、触发、表演、对白/声音、机位意图、结束状态
-5. **全局表演禁区**
-6. **必要的模型适配说明**（保持简短）
+1. **Model and total duration**
+2. **Scene and continuity lock** (1-3 lines)
+3. **Dramatic core and overall performance direction**
+4. **Shot timeline**: for each shot, the time, subject, trigger, performance, dialogue or sound, camera intent and end state
+5. **Global forbidden reactions**
+6. **Model adaptation notes where needed** (keep them short)
 
-若用户只要一个模型，只输出一个版本。若未指定模型，先给通用母版，再给 Kling 与 Seedance 2.0 的最小差异，不复制三遍完整正文。
+If the user wants only one model, output only that version. If no model is given, give a generic master first, then the minimal differences for Kling, Seedance 2.0 and MiniMax H3, without copying the full text three times. For MiniMax H3 the prompt itself must be written in H3's own format; see the H3 section of `references/model-adapters.md`.
 
-## 质检清单
+## Quality checklist
 
-交付前逐项检查：
+Before delivering, check each item:
 
-- 情绪变化是否由明确事件触发，而非凭空切换？
-- 外部动作和内部压抑目标是否同时成立？
-- 每个抽象情绪是否至少有一个肉眼可见或可听见的证据？
-- 表情、呼吸、身体和声音是否循序发生，避免所有反应同时出现？
-- 对白归属、画外声、打断和反应对象是否明确？
-- 时间是否装得下对白、停顿和动作？动作密度是否过高？
-- 机位是否说明了为什么动或不动，并在正确触发点开始？
-- 机位和连续性是否简短、从属，没有压过表演？
-- 是否保留用户原始剧情、顺序、台词和限制？所有新增内容是否只是执行性补足？
-- 模型能力是否采用保守表述，没有承诺未确认的功能？
+- Is every change of emotion triggered by a clear event rather than switching out of nowhere?
+- Do the external action and the suppressed internal goal both hold at the same time?
+- Does every abstract emotion have at least one piece of evidence that can be seen or heard?
+- Do expression, breath, body and voice happen in sequence instead of all at once?
+- Are dialogue ownership, off-screen voices, interruptions and the target of each reaction clear?
+- Does the time hold the dialogue, pauses and action? Is the action density too high?
+- Does the camera explain why it moves or stays still, and does it start at the right trigger?
+- Are camera and continuity short and subordinate, not overpowering the performance?
+- Are the user's original story, order, lines and constraints kept? Is everything added purely executional?
+- Are model capabilities stated conservatively, with no unconfirmed features promised?
 
-## 修复顺序
+## Repair order
 
-输出不稳定时，一次只改一个变量：
+When the output is unstable, change one variable at a time:
 
-1. 删除互相冲突的情绪和动作。
-2. 减少单镜动作数量并延长关键停顿。
-3. 明确触发与反应先后、说话者与被摄者。
-4. 简化或取消无动机的运镜。
-5. 增加一条最必要的连续性锚点。
-6. 最后才调整画质、镜头语言或模型参数。
+1. Remove conflicting emotions and actions.
+2. Reduce the number of actions per shot and lengthen the key pauses.
+3. Make the order of trigger and reaction, and the speaker and the subject on camera, explicit.
+4. Simplify or remove unmotivated camera moves.
+5. Add the single most necessary continuity anchor.
+6. Only then adjust image quality, camera language or model parameters.

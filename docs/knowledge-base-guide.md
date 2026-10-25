@@ -1,45 +1,45 @@
-# 情绪知识库维护规范
+# Emotion Knowledge Base Maintenance Guide
 
-## 可以提交什么
+## What you can submit
 
-- 情绪描写和表演方法
-- 眼神、面部、呼吸、停顿和声音状态
-- 身体动作、重心与未完成行动
-- 电影或演员表演观察
-- 经过实际生成验证的提示词
-- 失败案例与修正经验
+- Descriptions of emotions and acting methods
+- Gaze, face, breath, pauses and vocal states
+- Body actions, weight and unfinished actions
+- Observations of film or actors' performances
+- Prompts verified by real generations
+- Failure cases and the fixes that worked
 
-## 推荐提交信息
+## Suggested submission format
 
 ```text
-内容类型：原文摘录 / 个人观察 / 实际测试
-来源：
-对应情绪：
-适用人物和场景：
-是否保留原文：
-是否允许合并去重：
-正文：
+Content type: quotation / personal observation / real test
+Source:
+Emotion:
+Characters and scenes it applies to:
+Keep the original wording?:
+May it be merged and de-duplicated?:
+Text:
 ```
 
-## 收录门槛
+## Bar for inclusion
 
-一个知识条目至少应回答：
+An entry should answer at least:
 
-1. 什么事件触发了情绪？
-2. 角色想完成什么外部行动？
-3. 角色在隐藏或压抑什么？
-4. 情绪如何分阶段变化？
-5. 观众能看见什么？
-6. 观众能听见什么？
-7. 动作最终完成、停住还是失败？
-8. 哪些反应不能提前发生？
+1. What event triggers the emotion?
+2. What external action does the character want to complete?
+3. What is the character hiding or holding back?
+4. How does the emotion change in stages?
+5. What can the audience see?
+6. What can the audience hear?
+7. Is the action completed, held or does it fail in the end?
+8. Which reactions must not happen too early?
 
-只有抽象情绪标签、没有可执行行为的材料，需要先完成转译才能收录。
+Material with only abstract emotion labels and no executable behaviour must be translated into behaviour before it can be included.
 
-## 版本规范
+## Versioning
 
-- 小规模新增：更新次版本，如 `v1.1`。
-- 结构性变化：更新主版本，如 `v2.0`。
-- 已验证内容与待验证经验分开标记。
-- 矛盾经验不强行合并，分别注明适用条件。
-- Word 版本用于阅读，Markdown 版本用于 Git 比较和协作；两者内容应保持同步。
+- Small additions: bump the minor version, for example `v1.1`.
+- Structural changes: bump the major version, for example `v2.0`.
+- Mark verified content separately from experience still to be verified.
+- Do not force contradictory experience into one entry; note the conditions each applies under.
+- The Markdown version is the source for Git comparison, collaboration and search; the Word version is generated from it for reading. Keep them in sync.

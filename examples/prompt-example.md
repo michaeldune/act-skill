@@ -1,30 +1,30 @@
-# 示例：迟发、克制的分手反应
+# Example: A Delayed, Restrained Reaction to a Breakup
 
-## 输入
+## Input
 
 ```text
-模型：Seedance 2.0
-总时长：12 秒
-场景：深夜厨房
-人物：一名女性，刚听完恋人的分手语音
-对白：“好，我知道了。”
-核心情绪：迟发、克制的悲伤
-必须保留：手中始终拿着杯子
-禁止：触发前落泪、夸张颤抖、无动机运镜
+Model: Seedance 2.0
+Total duration: 12 seconds
+Scene: a kitchen late at night
+Character: a woman who has just listened to her partner's breakup voice message
+Dialogue: "Fine. I understand."
+Core emotion: delayed, restrained sadness
+Must keep: she holds a cup the whole time
+Forbidden: tears before the trigger, exaggerated trembling, unmotivated camera moves
 ```
 
-## 输出节选
+## Output excerpt
 
 ```text
-连续性锁定：同一人物、同一服装；杯子始终在右手；主光来自画面左侧；厨房空间和夜间声场不改变。
+Continuity lock: same character, same clothes; the cup always in her right hand; key light from the left of frame; the kitchen space and the night-time soundscape do not change.
 
-戏剧核心：她的外部目标是平静听完并结束对话；内部目标是不让对方听出自己已经被击中。情绪从日常专注进入短暂冻结，再进入维持正常的压抑，最后留下未释放的悲伤。
+Dramatic core: her external goal is to listen calmly to the end and finish the conversation; her internal goal is to keep the other person from hearing that she has been hit. The emotion moves from everyday focus into a brief freeze, then into holding on to normality, and finally leaves an unreleased sadness.
 
-00:00–00:02.5｜她按原有速度擦拭杯沿，目光停在手上。镜头平视中近景，保持静止，让日常节奏成立。
+00:00-00:02.5 | She wipes the rim of the cup at her usual pace, eyes on her hands. Eye-level medium close-up; the camera holds still so the everyday rhythm is established.
 
-00:02.5–00:05.5｜画外语音说：“我们到这里吧。”她的手先停在杯沿，视线仍不抬；半秒后下颌短暂绷紧，呼吸变浅。禁止提前转头或落泪。
+00:02.5-00:05.5 | An off-screen voice message says: "Let's end it here." Her hand stops on the rim of the cup first, and she still does not look up; half a second later her jaw tightens briefly and her breathing goes shallow. No turning her head early, no tears.
 
-00:05.5–00:09｜她试图维持正常语速，说：“好，我知道了。”在“知道”之后出现短暂停顿，尾音失去支撑。镜头只在第一次声音泄漏后缓慢靠近，并在眼神仍可读的位置停止。
+00:05.5-00:09 | Trying to keep a normal pace, she says: "Fine. I understand." A short pause slips in after "understand", and the end of the line loses its support. The camera moves in slowly only after this first leak in her voice, and stops where her eyes can still be read.
 
-00:09–00:12｜她继续擦杯子，却把同一个位置重复擦了两次；最后动作停在未完成状态，泪水可以积聚但不落下，情绪留在没有完成的呼吸里。
+00:09-00:12 | She goes back to wiping the cup, but wipes the same spot twice; the action stops unfinished at the end. Tears may gather but do not fall; the emotion stays in a breath that never completes.
 ```

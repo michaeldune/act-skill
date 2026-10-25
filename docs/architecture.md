@@ -1,30 +1,30 @@
-# 架构说明
+# Architecture
 
-## 三层提示词结构
+## The three-layer prompt structure
 
-1. **场景与连续性锁定**：只保存最容易漂移的身份、空间、道具、光线和上一镜状态。
-2. **分镜时间轴与 Camera Intent**：确定触发、反应时序、机位位置以及为什么动或不动。
-3. **演员八维表演**：用意图、情绪路径、面部、身体、声音、结束状态和禁区完成表演。
+1. **Scene and continuity lock**: keeps only the identity, space, props, light and previous-shot state most likely to drift.
+2. **Shot timeline and Camera Intent**: sets the triggers, the timing of reactions, the camera position, and why it moves or stays still.
+3. **The actor's eight-dimension performance**: completes the performance through intention, emotional path, face, body, voice, end state and forbidden reactions.
 
-这三层不是等权关系。演员表演是核心，前两层只负责让表演可读、可连续、可生成。
+The three layers are not equal. The actor's performance is the core; the first two layers only make the performance readable, continuous and possible to generate.
 
-## 执行数据
+## Execution data
 
-复杂节拍可以记录五个字段：
+A complex beat can record five fields:
 
-- `speaker`：实际发声者。
-- `camera_subject`：镜头主要观察对象。
-- `trigger_event`：触发表演变化的词、声音、目光、物件或动作。
-- `evidence_source`：观众从哪里看见或听见变化。
-- `information_priority`：这一刻首先要让观众读懂什么。
+- `speaker`: the person actually speaking.
+- `camera_subject`: the main subject the camera is watching.
+- `trigger_event`: the word, sound, look, object or action that triggers a change in the performance.
+- `evidence_source`: where the audience sees or hears the change.
+- `information_priority`: what the audience must understand first at this moment.
 
-## 失败修复顺序
+## Repair order when generation fails
 
-1. 删除冲突的情绪与动作。
-2. 减少单镜动作密度，延长关键停顿。
-3. 修正触发与反应先后、说话者与被摄者。
-4. 简化无动机运镜。
-5. 增加一条最必要的连续性锚点。
-6. 最后才调整画质与模型参数。
+1. Remove conflicting emotions and actions.
+2. Reduce the action density per shot and lengthen the key pauses.
+3. Fix the order of trigger and reaction, and the speaker and the subject on camera.
+4. Simplify unmotivated camera moves.
+5. Add the single most necessary continuity anchor.
+6. Only then adjust image quality and model parameters.
 
-一次只改变一个变量，方便判断真正的修复原因。
+Change one variable at a time, so you can tell what actually fixed it.

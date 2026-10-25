@@ -1,9 +1,0 @@
-{
-  "total_duration": 12,
-  "beats": [
-    {"label": "日常", "start": 0, "end": 2.5, "dialogue": "", "reserved_action_seconds": 2.5},
-    {"label": "触发", "start": 2.5, "end": 5.5, "dialogue": "我们到这里吧。", "reserved_action_seconds": 1.5},
-    {"label": "压住", "start": 5.5, "end": 9, "dialogue": "好，我知道了。", "reserved_action_seconds": 1.8},
-    {"label": "残留", "start": 9, "end": 12, "dialogue": "", "reserved_action_seconds": 3}
-  ]
-}

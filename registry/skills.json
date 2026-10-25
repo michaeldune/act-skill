@@ -3,13 +3,13 @@
   "skills": [
     {
       "internal_name": "direct-ai-actor-performance",
-      "display_name": "表演skill",
+      "display_name": "Performance Skill",
       "status": "ready",
       "source_path": "skills/direct-ai-actor-performance",
-      "knowledge_bases": ["knowledge-base/情绪"],
-      "primary_models": ["Kling", "Seedance 2.0"],
+      "knowledge_bases": ["knowledge-base/emotion"],
+      "primary_models": ["Kling", "Seedance 2.0", "MiniMax H3"],
       "performance_budget": "60%-70%",
-      "version": "1.0.0"
+      "version": "1.1.0"
     }
   ]
 }

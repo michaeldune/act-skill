@@ -1,0 +1,9 @@
+{
+  "total_duration": 12,
+  "beats": [
+    {"label": "everyday", "start": 0, "end": 2.5, "dialogue": "", "reserved_action_seconds": 2.5},
+    {"label": "trigger", "start": 2.5, "end": 5.5, "dialogue": "Let's end it here.", "reserved_action_seconds": 1.2},
+    {"label": "holding it down", "start": 5.5, "end": 9, "dialogue": "Fine. I understand.", "reserved_action_seconds": 1.8},
+    {"label": "residue", "start": 9, "end": 12, "dialogue": "", "reserved_action_seconds": 3}
+  ]
+}

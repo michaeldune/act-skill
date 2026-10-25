@@ -1,211 +1,215 @@
 <div align="center">
 
-# 🎭 Act Skill · 表演skill
+# 🎭 Act Skill · Performance Skill
 
-### 把“角色很悲伤”改写成模型真正能拍出来的表演
+### Turn "the character is very sad" into a performance a video model can actually shoot
 
-**情绪因果 · 微表情 · 身体动作 · 呼吸停顿 · 对白节奏 · 情绪化机位**
+**Emotional cause and effect · Micro-expressions · Body action · Breath and pauses · Dialogue rhythm · Camera that serves emotion**
 
 ![Codex Skill](https://img.shields.io/badge/Codex-Skill-111827?style=for-the-badge)
 ![Kling](https://img.shields.io/badge/Kling-Ready-6D5DFC?style=for-the-badge)
 ![Seedance 2.0](https://img.shields.io/badge/Seedance_2.0-Ready-FF4D4F?style=for-the-badge)
-![Language](https://img.shields.io/badge/Language-中文-0EA5E9?style=for-the-badge)
+![MiniMax H3](https://img.shields.io/badge/MiniMax_H3-Ready-16A34A?style=for-the-badge)
+![Language](https://img.shields.io/badge/Language-English-0EA5E9?style=for-the-badge)
 
-一个以**演员表演为绝对主导**的 AI 视频提示词 Skill。
+An AI video prompt skill in which **the actor's performance dominates**.
 
-[快速开始](#-快速开始) · [它解决什么](#-它解决什么) · [核心方法](#-核心方法) · [知识库](#-可扩展情绪知识库) · [项目结构](#-项目结构)
+[What it solves](#-what-it-solves) · [Core method](#-core-method) · [Quick start](#-quick-start) · [Knowledge base](#-an-extensible-emotion-knowledge-base) · [Project structure](#%EF%B8%8F-project-structure)
 
 </div>
 
+> This is an English translation of [yuyolin/act-skill](https://github.com/yuyolin/act-skill), with an added MiniMax H3 adapter. The original is written in Chinese.
+
 ---
 
-## ✨ 它解决什么
+## ✨ What it solves
 
-多数 AI 视频提示词会写很多画质、镜头和场景词，却只给演员一句：
+Most AI video prompts are full of image-quality, camera and set words, and give the actor a single line:
 
-> 她非常悲伤，眼含泪水。
+> She is very sad, her eyes full of tears.
 
-这不是表演指导，只是情绪标签。模型不知道：**悲伤从哪一刻开始、角色在压住什么、身体先发生什么、泪水是否应该出现、镜头为什么移动。**
+That is not acting direction, only an emotion label. The model does not know **when the sadness starts, what the character is holding back, what the body does first, whether tears should appear, or why the camera moves.**
 
-`表演skill` 会把它转译成可执行节拍：
+The `Performance Skill` translates it into executable beats:
 
-> 听到触发词后，她仍把手上的动作做完一半，视线没有抬起；下颌只绷紧一瞬，呼吸在下一句话前卡住。她试图维持正常语速，却在关键词后出现多余停顿。镜头保持静止，直到第一次情绪泄漏后才缓慢靠近，并在眼神可读的位置停止。禁止触发前落泪。
+> When she hears the trigger line, she still finishes half of what her hands are doing, without looking up; her jaw tightens for just a moment, and her breath catches before the next line. She tries to keep a normal pace, but an extra pause slips in after the key word. The camera holds still until the first leak of emotion, then moves in slowly and stops where her eyes can still be read. No tears before the trigger.
 
-核心区别是：
+The core difference:
 
-| 普通提示词 | 表演skill |
+| A typical prompt | The Performance Skill |
 |---|---|
-| 写情绪名称 | 写情绪发生的因果链 |
-| 罗列表情 | 安排反应的先后顺序 |
-| 让所有动作同时发生 | 一个主载体 + 一个辅助载体 |
-| 运镜为了“电影感” | 运镜由触发与人物关系驱动 |
-| 堆叠背景和参数 | 让辅助信息服从演员表演 |
-| 只描述结果 | 同时规定结束残留与表演禁区 |
+| Names the emotion | Writes the chain of cause and effect behind it |
+| Lists expressions | Sets the order in which reactions happen |
+| Makes every action happen at once | One primary carrier + one supporting carrier |
+| Moves the camera for a "cinematic feel" | Moves the camera because of a trigger or a relationship |
+| Piles on background and parameters | Keeps supporting information subordinate to the actor |
+| Describes only the result | Also sets the emotional residue at the end and the forbidden reactions |
 
-## 🔥 为什么它不只是提示词模板
+## 🔥 Why it is more than a prompt template
 
-`表演skill` 是一套从剧情到可生成表演的导演工作流：
+The `Performance Skill` is a director's workflow from story to a performance that can be generated:
 
 ```mermaid
 flowchart LR
-    A["锁定剧情事实"] --> B["外部目标 + 内部压抑目标"]
-    B --> C["情绪曲线与触发事件"]
-    C --> D["检索情绪知识库"]
-    D --> E["八维表演设计"]
-    E --> F["对白、呼吸与沉默"]
+    A["Lock the story facts"] --> B["External goal + suppressed internal goal"]
+    B --> C["Emotional curve and trigger events"]
+    C --> D["Search the emotion knowledge base"]
+    D --> E["Eight-dimension performance design"]
+    E --> F["Dialogue, breath and silence"]
     F --> G["Camera Intent"]
-    G --> H["时间轴与连续性质检"]
-    H --> I["Kling / Seedance 2.0 提示词"]
+    G --> H["Timeline and continuity check"]
+    H --> I["Kling / Seedance 2.0 / MiniMax H3 prompt"]
 ```
 
-它不会把知识库内容生硬贴进提示词。工作顺序永远是：**先理解人物，再检索；先判断动机，再选择动作。** 找不到合适条目时，Skill 会自主生成，而不是硬套模板。
+It never pastes knowledge-base text into a prompt wholesale. The order is always: **understand the character first, then search; judge the motive first, then choose the action.** When no suitable entry exists, the skill writes its own rather than forcing a template.
 
-## 🧠 核心方法
+## 🧠 Core method
 
-### 1. 表演内容占绝对主导
+### 1. The performance dominates
 
-默认提示词信息预算：
+Default information budget for a prompt:
 
-| 内容 | 占比 |
+| Content | Share |
 |---|---:|
-| 情绪与演员表演 | **60%–70%** |
-| 对白、声音、呼吸和停顿 | 10%–15% |
-| 机位、构图和运动 | 10%–15% |
-| 人物、环境、道具、光线连续性 | 5%–8% |
-| 模型参数和画质词 | 3%–5% |
+| Emotion and the actor's performance | **60%-70%** |
+| Dialogue, sound, breath and pauses | 10%-15% |
+| Camera position, framing and movement | 10%-15% |
+| Character, environment, prop and lighting continuity | 5%-8% |
+| Model parameters and image-quality words | 3%-5% |
 
-背景一致性、人物一致性和摄影信息都会检查，但只保留最必要的锚点，不允许反客为主。
+Background consistency, character consistency and camera information are all checked, but only the most necessary anchors are kept, and none of them may take over.
 
-### 2. 八维表演框架
+### 2. The eight-dimension performance framework
 
-每个关键节拍依次判断：
+For each key beat, decide in order:
 
-1. 时间与镜头
-2. 外部目标与内部压抑目标
-3. 情绪起点、触发、变化与终点
-4. 触发事件与表演载体
-5. 肉眼可见的面部动作
-6. 视线、身体、重心与行动完成状态
-7. 声音、呼吸、停顿、抢话与沉默
-8. 结束残留与禁止过早发生的反应
+1. Time and shot
+2. External goal and suppressed internal goal
+3. Where the emotion starts, what triggers it, how it changes and where it ends
+4. The trigger event and the carrier of the performance
+5. Facial actions a viewer can actually see
+6. Gaze, body, weight and whether the action is completed
+7. Sound, breath, pauses, cutting in and silence
+8. The residue at the end, and the reactions that must not happen too early
 
-### 3. Camera Intent：机位也在“表演”
+### 3. Camera Intent: the camera is "acting" too
 
-机位的位置、静止和移动必须回答：
+The camera's position, stillness and movement must answer:
 
-> 观众此刻需要感受到什么，因此机位为什么在这里，为什么动或不动？
+> What does the audience need to feel at this moment, so why is the camera here, and why does it move or not move?
 
-- 静止可以表达压迫、等待、尴尬或无处可逃。
-- 运动必须由触发、关系变化、信息揭示或人物行动启动。
-- 推近需要写明触发点、路径、速度、持续时间和停止位置。
-- 不使用“悲伤必推近、愤怒必手持”之类的机械公式。
+- Stillness can express pressure, waiting, awkwardness or having nowhere to escape.
+- Movement must be started by a trigger, a change in the relationship, a reveal of information or a character's action.
+- A push-in needs its trigger, path, speed, duration and stopping point written down.
+- No mechanical formulas such as "sadness always pushes in, anger is always handheld".
 
-### 4. 对白不是字幕，而是表演事件
+### 4. Dialogue is not subtitles, it is a performance event
 
-Skill 会区分：
+The skill distinguishes:
 
-- 谁在说话，镜头在看谁
-- 哪个词触发听者反应
-- 画外声、电话声和门外声的位置
-- 谁打断谁，被打断者留下什么未完成反应
-- 无对白时，什么声音、物件或目光承担触发作用
+- who is speaking, and whom the camera is looking at
+- which word triggers the listener's reaction
+- where off-screen voices, phone calls and voices behind doors come from
+- who interrupts whom, and what unfinished reaction the interrupted person is left with
+- when there is no dialogue, which sound, object or look carries the trigger
 
-## 🚀 快速开始
+## 🚀 Quick start
 
-### 在 Codex 中调用
+### Calling it
 
 ```text
-使用表演skill。
+Use the Performance Skill.
 
-模型：Seedance 2.0
-总时长：12 秒
-人物关系：刚分手的恋人
-场景：深夜厨房
-剧情：她听完对方的最后一条语音，试图装作没事
-对白：“好，我知道了。”
-核心情绪：迟发、克制的悲伤
-必须保留：她手里一直拿着杯子
-不要出现：触发前落泪、夸张颤抖、无动机运镜
+Model: Seedance 2.0
+Total duration: 12 seconds
+Relationship: a couple who have just broken up
+Scene: a kitchen late at night
+Story: after listening to the other person's last voice message, she tries to act as if nothing is wrong
+Dialogue: "Fine. I understand."
+Core emotion: delayed, restrained sadness
+Must keep: she is holding a cup the whole time
+Must not happen: tears before the trigger, exaggerated trembling, unmotivated camera moves
 ```
 
-信息不完整也可以调用。Skill 会使用容易回退的保守假设；只有缺失内容会改变剧情事实时才询问。
+You can call it with incomplete information. The skill uses conservative assumptions that are easy to roll back, and only asks when something missing would change the facts of the story.
 
-### 安装
+### Installing
 
-将 Skill 目录复制或链接到 Codex 的 skills 目录：
+Copy or link the skill folder into your agent's skills directory:
 
 ```text
 skills/direct-ai-actor-performance
 ```
 
-知识库默认自动发现仓库内的：
+By default the knowledge base is found inside the repository at:
 
 ```text
-knowledge-base/情绪
+knowledge-base/emotion
 ```
 
-也可以通过环境变量指定自定义知识库：
+You can also point to a custom knowledge base with an environment variable:
 
 ```powershell
-$env:ACT_SKILL_KB="D:\your-path\knowledge-base\情绪"
+$env:ACT_SKILL_KB="D:\your-path\knowledge-base\emotion"
 ```
 
-## 📚 可扩展情绪知识库
+## 📚 An extensible emotion knowledge base
 
-仓库同时保留两种格式：
+The repository keeps two formats:
 
-- [`情绪表演知识库-v1.md`](knowledge-base/情绪/情绪表演知识库-v1.md)：便于 GitHub 阅读、比较和协作。
-- [`情绪表演知识库-v1.docx`](knowledge-base/情绪/情绪表演知识库-v1.docx)：排版完成的 Word 版本。
+- [`emotion-performance-kb-v1.md`](knowledge-base/emotion/emotion-performance-kb-v1.md): easy to read, compare and collaborate on in GitHub. This is the source the search script reads.
+- [`emotion-performance-kb-v1.docx`](knowledge-base/emotion/emotion-performance-kb-v1.docx): a Word version generated from the Markdown.
 
-当前初始条目覆盖：
+The current entries cover:
 
-- 悲伤：克制、迟发与崩溃边缘
-- 愤怒：压抑、防御与短促爆发
-- 恐惧：冻结、侦测与求生反应
-- 羞耻：缩小自己与避免被看见
-- 内疚：自责、修复与不敢靠近
-- 思念与失落：被日常物件触发
-- 欣喜与释然：确认之后才释放
-- 嫉妒与不安：观察、比较与掩饰
+- Sadness: restraint, delayed reaction and the edge of breaking
+- Anger: suppression, defence and short outbursts
+- Fear: freezing, scanning and survival response
+- Shame: making yourself smaller and avoiding being seen
+- Guilt: self-blame, repair and not daring to come close
+- Longing and loss: triggered by everyday objects
+- Joy and relief: released only after confirmation
+- Jealousy and insecurity: watching, comparing and covering up
 
-每个合格条目必须包含：适用前提、双重目标、明确触发、情绪阶段、面部/身体/声音证据、结束残留、表演禁区、简短机位支撑和可直接取用的提示词片段。
+Every qualifying entry must include: when it applies, the dual goals, a clear trigger, emotional stages, facial, body and voice evidence, the residue at the end, forbidden reactions, brief camera support and prompt fragments ready to use.
 
-检索示例：
+Search example:
 
 ```powershell
 python skills/direct-ai-actor-performance/scripts/search_emotion_library.py `
-  --query "悲伤 克制 迟发 不愿被看见" `
+  --query "sadness restrained delayed does not want to be seen" `
   --top-k 5 `
   --json
 ```
 
-## 🎬 Kling 与 Seedance 2.0
+## 🎬 Kling, Seedance 2.0 and MiniMax H3
 
-Skill 先生成平台无关的**表演母版**，再做最小模型适配：
+The skill first writes a platform-independent **performance master**, then makes the smallest model adaptation:
 
-| 适配对象 | 输出策略 |
+| Target | Output strategy |
 |---|---|
-| Seedance 2.0 | 适合清晰的多镜头时间轴，区分图像、动作视频、音频等参考素材的用途 |
-| Kling | 版本能力未知时采用保守单段提示词；确认支持自定义多镜头或元素参考后再启用对应结构 |
+| Seedance 2.0 | A clear multi-shot timeline; states what each reference (image, motion video, audio) is for |
+| Kling | A conservative single prompt when the version's abilities are unknown; custom multi-shot or element references only once they are confirmed |
+| MiniMax H3 | The master poured into H3's own format (the three-field brief, the first-frame line, or the six-section reference brief), with `<d>` dialogue tags, lips closing as an event after each line, voice references in speaking order, and a tested fix for oily skin in hard light |
 
-模型能力变化不会影响核心表演逻辑。仓库不会把某个平台的新功能误写成所有版本都具备的能力。
+Changes in model abilities do not affect the core performance logic. The repository never describes a new feature of one platform as something every version has.
 
-## 🧪 时间轴验证
+## 🧪 Timeline validation
 
-仓库提供对白时长与镜头节拍检查脚本：
+The repository includes a script that checks dialogue length and shot beats:
 
 ```powershell
 python skills/direct-ai-actor-performance/scripts/validate_timeline.py examples/timeline.json
 ```
 
-它会检查：
+It checks:
 
-- 节拍重叠或未说明空档
-- 起止时间错误和总时长越界
-- 对白估算时长是否超过可用时间
-- 动作预留时间是否足够
+- overlapping beats or unexplained gaps
+- wrong start and end times, and beats outside the total duration
+- whether the estimated dialogue time exceeds the time available
+- whether enough time is reserved for the action
 
-## 🗂️ 项目结构
+## 🗂️ Project structure
 
 ```text
 act-skill/
@@ -216,12 +220,12 @@ act-skill/
 │     ├─ references/
 │     └─ scripts/
 ├─ knowledge-base/
-│  └─ 情绪/
-│     ├─ 情绪表演知识库-v1.md
-│     └─ 情绪表演知识库-v1.docx
-├─ applications/表演skill/
+│  └─ emotion/
+│     ├─ emotion-performance-kb-v1.md
+│     └─ emotion-performance-kb-v1.docx
+├─ applications/performance-skill/
 │  ├─ validation/
-│  └─ 最终验收.md
+│  └─ final-acceptance.md
 ├─ examples/
 ├─ docs/
 ├─ registry/skills.json
@@ -229,44 +233,44 @@ act-skill/
 └─ README.md
 ```
 
-## ✅ 质量边界
+## ✅ Quality boundaries
 
-交付前必须确认：
+Before delivery, confirm that:
 
-- 情绪变化由明确事件触发，而不是凭空切换。
-- 每个抽象情绪至少拥有一个可见或可听的证据。
-- 表情、呼吸、身体和声音循序发生，没有同时堆叠。
-- 对白归属、画外声、打断和反应对象明确。
-- 时间装得下对白、停顿和动作。
-- 运镜有触发、有停止位置，且没有抢走演员反应。
-- 连续性信息简短，从属于表演。
-- 所有新增内容只补足执行信息，不擅自改写剧情事实。
+- every change of emotion is triggered by a clear event rather than switching out of nowhere
+- every abstract emotion has at least one piece of visible or audible evidence
+- expression, breath, body and voice happen in sequence rather than piling up at once
+- dialogue ownership, off-screen voices, interruptions and reaction targets are clear
+- the time holds the dialogue, pauses and action
+- camera moves have a trigger and a stopping point, and do not steal the actor's reactions
+- continuity information is brief and subordinate to the performance
+- anything added only completes the execution and never rewrites the facts of the story
 
-## 🧭 版本计划
+## 🧭 Roadmap
 
-- `v1.x`：扩展情绪条目、实例与检索质量。
-- `v2.x`：增加人物关系、表演强度和长镜头节拍知识库。
-- 后续方向：真实生成结果回灌、失败样本分类、模型差异回归测试。
+- `v1.x`: more emotion entries, examples and better search quality.
+- `v2.x`: knowledge bases for character relationships, performance intensity and long-take beats.
+- Later: feeding back real generation results, classifying failures, regression tests across models.
 
-详见 [`CHANGELOG.md`](CHANGELOG.md)。
+See [`CHANGELOG.md`](CHANGELOG.md).
 
-## 🤝 贡献情绪材料
+## 🤝 Contributing emotion material
 
-欢迎提交电影表演观察、微表情笔记、声音节奏、身体行为、成功提示词和失败案例。内容不会原样堆进知识库，而会经过：
+Observations of film performance, micro-expression notes, vocal rhythm, body behaviour, successful prompts and failure cases are all welcome. Material is not piled into the knowledge base as is; it goes through:
 
-**来源标注 → 去重 → 适用条件判断 → 可执行化 → 禁区补充 → 检索测试**
+**Source attribution -> de-duplication -> conditions of use -> made executable -> forbidden reactions added -> search test**
 
-请先阅读 [`docs/knowledge-base-guide.md`](docs/knowledge-base-guide.md)。
+Please read [`docs/knowledge-base-guide.md`](docs/knowledge-base-guide.md) first.
 
-## 📄 权利说明
+## 📄 License
 
-本项目采用 [MIT License](LICENSE)，允许使用、修改和再发布，但必须保留版权与许可声明。
+This project uses the [MIT License](LICENSE). You may use, modify and redistribute it, but must keep the copyright and license notice.
 
 ---
 
 <div align="center">
 
-**真正的表演提示词，不是告诉角色“要悲伤”。**  
-**而是让情绪在正确的时刻，通过正确的身体证据发生。**
+**A real performance prompt does not tell the character to "be sad".**  
+**It lets the emotion happen at the right moment, through the right physical evidence.**
 
 </div>

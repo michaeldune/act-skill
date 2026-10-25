@@ -1,50 +1,50 @@
-name: 新增情绪知识条目
-description: 提交可转化为演员行为的情绪材料、观察或测试结果
+name: New emotion knowledge entry
+description: Submit emotion material, observations or test results that can be turned into actor behaviour
 title: "[Emotion] "
 labels: ["knowledge-base"]
 body:
   - type: dropdown
     id: source_type
     attributes:
-      label: 内容类型
+      label: Content type
       options:
-        - 实际生成测试
-        - 个人表演观察
-        - 原文摘录
-        - 失败案例与修正
+        - Real generation test
+        - Personal performance observation
+        - Quotation
+        - Failure case and fix
     validations:
       required: true
   - type: input
     id: emotion
     attributes:
-      label: 对应情绪
-      placeholder: 例如：迟发、克制的悲伤
+      label: Emotion
+      placeholder: "For example: delayed, restrained sadness"
     validations:
       required: true
   - type: textarea
     id: context
     attributes:
-      label: 适用人物、关系与场景
+      label: Characters, relationships and scenes it applies to
     validations:
       required: true
   - type: textarea
     id: trigger
     attributes:
-      label: 触发事件与情绪阶段
+      label: Trigger event and emotional stages
     validations:
       required: true
   - type: textarea
     id: evidence
     attributes:
-      label: 可见或可听的表演证据
-      description: 请写眼神、面部、身体、重心、声音、呼吸、停顿或未完成行动。
+      label: Visible or audible performance evidence
+      description: Describe gaze, face, body, weight, voice, breath, pauses or unfinished actions.
     validations:
       required: true
   - type: textarea
     id: avoid
     attributes:
-      label: 表演禁区或失败表现
+      label: Forbidden reactions or failure signs
   - type: textarea
     id: source
     attributes:
-      label: 来源与验证说明
+      label: Source and verification notes

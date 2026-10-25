@@ -2,28 +2,28 @@
   "total_duration": 12,
   "beats": [
     {
-      "label": "日常",
+      "label": "everyday",
       "start": 0,
       "end": 2.5,
       "dialogue": "",
       "reserved_action_seconds": 2.5
     },
     {
-      "label": "触发",
+      "label": "trigger",
       "start": 2.5,
       "end": 5.5,
-      "dialogue": "我们到这里吧。",
-      "reserved_action_seconds": 1.5
+      "dialogue": "Let's end it here.",
+      "reserved_action_seconds": 1.2
     },
     {
-      "label": "压住",
+      "label": "holding it down",
       "start": 5.5,
       "end": 9,
-      "dialogue": "好，我知道了。",
+      "dialogue": "Fine. I understand.",
       "reserved_action_seconds": 1.8
     },
     {
-      "label": "残留",
+      "label": "residue",
       "start": 9,
       "end": 12,
       "dialogue": "",

@@ -1,23 +1,36 @@
 # Changelog
 
-本项目遵循语义化版本思路管理 Skill、知识库与模型适配变化。
+This project manages changes to the skill, the knowledge base and the model adapters with semantic versioning.
+
+## [1.1.0] - 2026-10-24
+
+### Added
+
+- A MiniMax H3 adapter in `references/model-adapters.md`: mode selection by attached media (three-field brief, first-frame alignment line, six-section reference brief), the performance timeline in H3's `[Shot N]` and timestamp grammar, `<d>` dialogue tags with speaker IDs, lips closing as an event after every line, voice references attached in speaking order and as WAV, and the fal Realism People LoRA as a tested fix for oily skin in hard light.
+
+### Changed
+
+- The whole repository is translated into English: the skill, references, knowledge base, validation records, documentation, examples and issue template. Chinese file and folder names are renamed to English (`knowledge-base/emotion`, `applications/performance-skill`, `asset-index.md` and so on).
+- `search_emotion_library.py` accepts longer English headings (up to 80 characters), still recognises Chinese headings, ignores English words shorter than three letters in a query, and looks for the knowledge base in `knowledge-base/emotion`.
+- Script messages are in English.
+- The Word version of the knowledge base is regenerated from the English Markdown.
 
 ## [1.0.0] - 2026-08-03
 
 ### Added
 
-- 建立 `表演skill` 的完整 Codex Skill 结构。
-- 建立情绪与演员表演占 60%–70% 的输出优先级。
-- 加入八维表演框架、双重目标、情绪触发、结束残留与表演禁区。
-- 加入对白归属、画外声、抢话、打断和无对白触发规则。
-- 加入 Camera Intent、机位静止/运动触发、路径和停止点规则。
-- 加入 Kling 与 Seedance 2.0 的保守模型适配。
-- 新增可检索的初始情绪知识库，同时提供 Markdown 与 Word 版本。
-- 新增知识库检索脚本和时间轴验证脚本。
-- 纳入三轮干跑、压力测试和最终验收记录。
+- The complete Codex skill structure for the `Performance Skill`.
+- The output priority in which emotion and the actor's performance take 60%-70% of the prompt.
+- The eight-dimension performance framework, dual goals, emotional triggers, residue at the end and forbidden reactions.
+- Rules for dialogue ownership, off-screen voices, cutting in, interruptions and triggers without dialogue.
+- Camera Intent, with rules for when the camera stays still or moves, its path and its stopping point.
+- Conservative model adaptation for Kling and Seedance 2.0.
+- A searchable starting emotion knowledge base, in both Markdown and Word.
+- The knowledge-base search script and the timeline validation script.
+- Records of three dry runs, a stress test and the final acceptance check.
 
 ### Design decisions
 
-- 情绪知识库只提供候选动作，不替代人物与剧情判断。
-- 机位、连续性、背景和技术参数不得压过演员表演。
-- 版本未知时不承诺未确认的模型能力。
+- The emotion knowledge base only offers candidate actions; it never replaces judgement about the character and the story.
+- Camera, continuity, background and technical parameters must not overpower the actor's performance.
+- When the version is unknown, unconfirmed model abilities are never promised.

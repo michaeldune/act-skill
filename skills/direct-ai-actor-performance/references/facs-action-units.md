@@ -1,18 +1,18 @@
-# 面部动作自然语言速查
+# Facial Action Quick Reference in Natural Language
 
-优先写观众可见的自然语言。AU 编号只用于内部校验，不要在最终提示词中堆术语。
+Write what the audience can see, in natural language. Use AU numbers only for internal checking; do not pile terminology into the final prompt.
 
-| 区域 | 可见动作 | 常见 AU 参考 | 使用提醒 |
+| Area | Visible action | Common AU reference | Usage note |
 |---|---|---|---|
-| 眉间 | 眉头向内收紧 | AU4 | 可用于专注、痛苦、愤怒或困惑，不能单独等同某种情绪 |
-| 眉内侧 | 眉内侧轻抬 | AU1 | 常见于担忧或脆弱，幅度小于“挑眉” |
-| 上眼睑 | 上眼睑抬起、眼裂增大 | AU5 | 惊讶或警觉；持续过久会显得定格 |
-| 眼周 | 下眼睑收紧、眼周有张力 | AU7 | 警觉、克制或愤怒；与凝视方向一起写 |
-| 面颊 | 面颊抬起、眼角收紧 | AU6 | 可参与真实笑，也可能是强忍泪水，需要上下文 |
-| 嘴角 | 嘴角上提 | AU12 | 笑意强度需与眼周、呼吸和情境一致 |
-| 嘴角 | 嘴角向下拉 | AU15 | 悲伤线索之一，避免长时间夸张维持 |
-| 下唇/下巴 | 下唇或下巴短暂绷紧 | AU17 | 忍住话、忍哭或自我控制；适合作为转折前兆 |
-| 双唇 | 双唇压紧 | AU24 | 抑制说话、愤怒或决定；写明何时松开 |
-| 下颌 | 下颌放松或突然张开 | AU26 | 惊讶、喘息、失语；应由触发驱动 |
+| Between the brows | Brows drawn inward and together | AU4 | Can mean focus, pain, anger or confusion; never equals one emotion on its own |
+| Inner brows | Inner brows lifted slightly | AU1 | Common in worry or vulnerability; smaller than a "raised eyebrow" |
+| Upper eyelids | Upper lids raised, eyes opened wider | AU5 | Surprise or alertness; held too long it looks frozen |
+| Around the eyes | Lower lids tightened, tension around the eyes | AU7 | Alertness, restraint or anger; write it together with the gaze direction |
+| Cheeks | Cheeks raised, corners of the eyes tightened | AU6 | Can be part of a real smile, or of holding back tears; needs context |
+| Mouth corners | Mouth corners pulled up | AU12 | Smile intensity must match the eyes, breath and situation |
+| Mouth corners | Mouth corners pulled down | AU15 | One cue for sadness; avoid holding an exaggerated version for long |
+| Lower lip and chin | Lower lip or chin tightening briefly | AU17 | Holding back words or tears, self-control; good as a signal before a turn |
+| Lips | Lips pressed together | AU24 | Suppressing speech, anger or a decision; write when they release |
+| Jaw | Jaw relaxing or dropping suddenly | AU26 | Surprise, gasping, losing words; should be driven by a trigger |
 
-组合原则：先选一个主动作，再配合呼吸、视线或身体中的一个辅助证据。不要一次列出多个 AU 作为表演结果。
+Combining rule: choose one primary action first, then pair it with one supporting piece of evidence from breath, gaze or body. Do not list several AUs as the result of a performance.

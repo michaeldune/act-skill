@@ -12,7 +12,7 @@ from pathlib import Path
 def speech_seconds(text: str) -> float:
     chinese = len(re.findall(r"[\u4e00-\u9fff]", text))
     english_words = len(re.findall(r"[A-Za-z]+(?:'[A-Za-z]+)?", text))
-    punctuation = len(re.findall(r"[，。！？；,.!?;…]", text))
+    punctuation = len(re.findall(r"[\uff0c\u3002\uff01\uff1f\uff1b,.!?;\u2026]", text))
     return chinese / 4.5 + english_words / 2.4 + punctuation * 0.12
 
 
@@ -28,13 +28,13 @@ def validate(data: dict) -> dict:
         duration = end - start
         label = beat.get("label") or f"beat-{index}"
         if duration <= 0:
-            issues.append({"level": "error", "beat": label, "message": "结束时间必须晚于开始时间"})
+            issues.append({"level": "error", "beat": label, "message": "End time must be later than start time"})
         if start < previous_end - 1e-6:
-            issues.append({"level": "error", "beat": label, "message": f"与上一节拍重叠 {previous_end - start:.2f}s"})
+            issues.append({"level": "error", "beat": label, "message": f"Overlaps the previous beat by {previous_end - start:.2f}s"})
         elif start > previous_end + 0.15:
-            issues.append({"level": "warning", "beat": label, "message": f"前方存在 {start - previous_end:.2f}s 未说明空档"})
+            issues.append({"level": "warning", "beat": label, "message": f"Unaccounted gap of {start - previous_end:.2f}s before this beat"})
         if start < 0 or (total and end > total + 1e-6):
-            issues.append({"level": "error", "beat": label, "message": "节拍超出总时长"})
+            issues.append({"level": "error", "beat": label, "message": "Beat runs outside the total duration"})
         dialogue = str(beat.get("dialogue", ""))
         estimate = round(speech_seconds(dialogue), 2) if dialogue else 0.0
         available = max(0.0, duration - float(beat.get("reserved_action_seconds", 0)))
@@ -42,12 +42,12 @@ def validate(data: dict) -> dict:
             issues.append({
                 "level": "warning",
                 "beat": label,
-                "message": f"对白估算 {estimate:.2f}s，超过可用 {available:.2f}s；缩短对白或延长节拍",
+                "message": f"Dialogue estimated at {estimate:.2f}s exceeds the {available:.2f}s available; shorten the line or lengthen the beat",
             })
         normalized.append({"label": label, "start": start, "end": end, "duration": round(duration, 2), "speech_estimate": estimate})
         previous_end = max(previous_end, end)
     if total and previous_end < total - 0.15:
-        issues.append({"level": "warning", "beat": "timeline", "message": f"结尾有 {total - previous_end:.2f}s 未说明"})
+        issues.append({"level": "warning", "beat": "timeline", "message": f"{total - previous_end:.2f}s at the end is unaccounted for"})
     return {
         "valid": not any(i["level"] == "error" for i in issues),
         "total_duration": total,
